@@ -33,7 +33,7 @@ jobs:
       # 更新api_data
       - name: Update api_data
         run: |
-          python handler/update_data.py
+          python update_data.py
 
       - name: 更新api项目
         uses: Smart-Transportation/push@v1.3
