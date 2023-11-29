@@ -8,7 +8,13 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     # 获取环境变量github-token的值
-    return os.environ.get('GH_TOKEN')
+    try:
+        token = os.environ['GH_TOKEN']
+        if token == '':
+            return '环境变量为空'
+    except:
+        return '环境变量无法获取'
+    return token
 
 
 @app.route('/about')
