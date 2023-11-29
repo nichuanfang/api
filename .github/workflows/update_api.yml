@@ -31,7 +31,7 @@ jobs:
 
       - name: Update api_data
         env:
-          API_ADD_DATA: ${{ github.event.client_payload.data }}
+          API_ADD_DATA: ${{ github.event.client_payload }}
         run: |
           python handler/api_add_handler.py $API_ADD_DATA
 
