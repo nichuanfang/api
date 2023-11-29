@@ -6,7 +6,7 @@ with open('data.json', mode='r+',encoding='utf-8') as my_file:
     text = my_file.read()
     data = json.loads(text)
     # 新增数据
-    data['data'].append({
+    data.append({
         'name': '新数据',
         'age': 18
     })
