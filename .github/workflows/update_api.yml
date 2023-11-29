@@ -1,0 +1,46 @@
+name: 更新api_data
+
+on:
+  repository_dispatch:
+    types: [api_add]
+
+jobs:
+  update_api_data:
+    runs-on: ubuntu-latest
+    # 如果type为api_add，则执行以下步骤
+    if: github.event.client_payload.type == 'api_add'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      # 设置python环境
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          cache: pip
+
+      # pip install
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Update api_data
+        env:
+          API_ADD_DATA: ${{ github.event.client_payload.data }}
+        run: |
+          python handler/api_add_handler.py $API_ADD_DATA
+
+      - name: 更新api项目
+        uses: Smart-Transportation/push@v1.3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          branch: 'main'
+          author_email: 'github-actions[bot]@users.noreply.github.com'
+          author_name: 'github-actions[bot]'
+          message: '🐳 chore: 更新api数据'
