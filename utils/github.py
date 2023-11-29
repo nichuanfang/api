@@ -2,7 +2,7 @@ import json
 import requests
 import os
 
-GH_TOKEN = os.environ.get('GITHUB_TOKEN')
+GH_TOKEN = os.environ.get('GH_TOKEN')
 
 def trigger_github_workflow(event_type: str, client_payload: dict = {}):
     """触发github workflow
