@@ -1,12 +1,14 @@
 from flask import Flask
 import requests
+import os
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def home():
-    return 'Home Page Route'
+    # 获取环境变量github-token的值
+    return os.environ.get('GH_TOKEN')
 
 
 @app.route('/about')
