@@ -1,6 +1,8 @@
 name: 更新api_data
 
 on:
+  # 手动触发
+  workflow_dispatch:
   schedule:
     # 每天凌晨更新数据
     - cron: '0 0 * * *'
