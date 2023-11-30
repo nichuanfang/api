@@ -49,5 +49,7 @@ def turso_query():
     client = turso.acquire_client_sync()
     result = client.execute('SELECT * FROM frameworks')
     # 转为str
-    result = result.__str__()
-    return result
+    res = []
+    for row in result:
+        res.append(row['url'])
+    return res
