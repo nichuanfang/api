@@ -2,7 +2,7 @@
 
 关于在 linux 上执行`turso auth login`获取不到 Turso 的 token 的解决方案:
 
-> **Note**
+> [!NOTE]
 >
 > - Click on the link - ok
 > - Login on the web - ok
