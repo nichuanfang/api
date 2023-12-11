@@ -28,3 +28,7 @@ def portfolio():
 @app.route('/contact')
 def contact():
     return 'Contact Page Route'
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
