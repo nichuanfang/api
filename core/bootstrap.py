@@ -10,4 +10,4 @@ def init(app: Flask, debug: bool = False):
     for blueprint in blueprints:
         app.register_blueprint(blueprint)
     # 项目启动
-    app.run(debug=debug)
+    # app.run(debug=debug)
