@@ -14,6 +14,9 @@ def movies():
         _type_: 电影列表
     """
     # 获取请求参数page和page_size
-    page = int(request.args.get('page', 1))
+    curr_page = int(request.args.get('page', 1))
     page_size = int(request.args.get('page_size', 10))
-    return Result.success(movie_handler.get_movies(page, page_size))
+    try:
+        return Result.success(movie_handler.get_movies(curr_page, page_size))
+    except Exception as e:
+        return Result.fail(e)
