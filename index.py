@@ -7,4 +7,7 @@ app = Flask(__name__)
 # 允许跨域
 CORS(app)
 # 挂载路由 启动项目
-bootstrap.init(app=app)
+bootstrap.mount(app=app)
+
+if __name__ == '__main__':
+    bootstrap.run(app)
