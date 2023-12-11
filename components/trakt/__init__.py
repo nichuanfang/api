@@ -20,3 +20,22 @@ def movies():
         return Result.success(movie_handler.get_movies(curr_page, page_size))
     except Exception as e:
         return Result.fail(e)
+
+
+@blueprint.route('/update_movie_share_link', methods=['POST'])
+def update_movie_share_link():
+    """更新电影分享链接
+
+    Returns:
+        _type_: 更新结果
+    """
+    # 获取请求参数tmdb_id和share_link
+    tmdb_id = request.form.get('tmdb_id')
+    share_link = request.form.get('share_link')
+    if not tmdb_id or not share_link:
+        return Result.fail('tmdb_id和share_link不能为空')
+    try:
+        movie_handler.update_share_link(tmdb_id, share_link)
+        return Result.success()
+    except Exception as e:
+        return Result.fail(e)

@@ -72,7 +72,8 @@ class Result:
             str: _description_
         """
         res = {}
-        res['data'] = data.__json__() if isinstance(data, Page) else data
+        if data:
+            res['data'] = data.__json__() if isinstance(data, Page) else data
         res['code'] = code
         res['msg'] = msg if isinstance(msg, str) else str(msg)
         return json.dumps(res)

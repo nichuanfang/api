@@ -7,6 +7,8 @@ from core import cache
 TOTAL_COUNT = 'SELECT COUNT(*) FROM movie'
 # 分页查询电影列表
 QUERY_MOVIE_BY_PAGED = 'SELECT * FROM movie LIMIT :page_size OFFSET :offset'
+# 更新分享链接
+UPDATE_MOVIE_SHARE_LINK = 'UPDATE movie SET share_link = :share_link WHERE tmdb_id = :tmdb_id'
 
 
 @cache.cache_with_expiry(1)
@@ -47,9 +49,15 @@ def get_movies(curr_page: int = 1, page_size: int = 10):
         return page
 
 
-def clear_cache():
-    """清除缓存
+def update_share_link(movie_id: str, share_link: str):
+    """更新分享链接
+
+    Args:
+        movie_id (int): 电影的tmdb_id
+        share_link (str): 分享链接
     """
-    # 过期时间 cache_expiry_time
-    # 清空缓存
-    get_movies.cache_clear()
+    with acquire_client_sync() as turso_client:
+        turso_client.execute(UPDATE_MOVIE_SHARE_LINK, {
+            'tmdb_id': movie_id, 'share_link': share_link})
+        # 清除缓存
+        get_movies.cache_clear()
