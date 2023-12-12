@@ -67,6 +67,11 @@ def update_share_link(movie_id: str, share_link: str):
 
 @cache.cache_with_expiry(1)
 def get_index():
+    """获取电影索引
+
+    Returns:
+        _type_: 索引数据(base64编码)
+    """
     with acquire_client_sync() as turso_client:
         # 查询电影索引
         movie_index = turso_client.execute(
