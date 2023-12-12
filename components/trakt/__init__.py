@@ -22,6 +22,19 @@ def movies():
         return Result.fail(e)
 
 
+@blueprint.route('/index')
+def index():
+    """获取电影/剧集索引
+    """
+    try:
+        return Result.success({
+            'movie': movie_handler.get_index(),
+            'show': show_handler.get_index()
+        })
+    except Exception as e:
+        return Result.fail(e)
+
+
 @blueprint.route('/update_movie_share_link', methods=['POST'])
 def update_movie_share_link():
     """更新电影分享链接

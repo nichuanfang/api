@@ -9,6 +9,8 @@ TOTAL_COUNT = 'SELECT COUNT(*) FROM movie'
 QUERY_MOVIE_BY_PAGED = 'SELECT * FROM movie LIMIT :page_size OFFSET :offset'
 # 更新分享链接
 UPDATE_MOVIE_SHARE_LINK = 'UPDATE movie SET share_link = :share_link WHERE movie_id = :movie_id'
+#  根据类型查询索引表数据
+SELECT_LOCAL_SEARCH_BY_TYPE = "SELECT * FROM local_search WHERE type = ?"
 
 
 @cache.cache_with_expiry(1)
@@ -61,3 +63,12 @@ def update_share_link(movie_id: str, share_link: str):
             'movie_id': movie_id, 'share_link': share_link})
         # 清除缓存
         get_movies.cache_clear()
+
+
+@cache.cache_with_expiry(1)
+def get_index():
+    with acquire_client_sync() as turso_client:
+        # 查询电影索引
+        movie_index = turso_client.execute(
+            SELECT_LOCAL_SEARCH_BY_TYPE, ('movie',)).rows
+        return movie_index
