@@ -74,6 +74,8 @@ def get_index():
     """
     with acquire_client_sync() as turso_client:
         # 查询电影索引
-        movie_index = turso_client.execute(
+        rows = turso_client.execute(
             SELECT_LOCAL_SEARCH_BY_TYPE, ('movie',)).rows
-        return movie_index
+        if len(rows) == 0:
+            return ''
+        movie_index = rows[0]['b64_index']
