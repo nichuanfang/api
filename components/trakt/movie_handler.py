@@ -78,4 +78,4 @@ def get_index():
             SELECT_LOCAL_SEARCH_BY_TYPE, ('movie',)).rows
         if len(rows) == 0:
             return ''
-        movie_index = rows[0]['b64_index']
+        return rows[0]['b64_index']
