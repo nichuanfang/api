@@ -35,6 +35,19 @@ def index():
         return Result.fail(e)
 
 
+@blueprint.route('/refresh_cache')
+def refresh_cache():
+    """刷新缓存
+    """
+    try:
+        movie_handler.get_movies.cache_clear()
+        movie_handler.get_index.cache_clear()
+        show_handler.get_index.cache_clear()
+        return Result.success(msg='刷新缓存成功')
+    except Exception as e:
+        return Result.fail(e)
+
+
 @blueprint.route('/update_movie_share_link', methods=['POST'])
 def update_movie_share_link():
     """更新电影分享链接
@@ -49,6 +62,6 @@ def update_movie_share_link():
         return Result.fail('movie_id和share_link不能为空')
     try:
         movie_handler.update_share_link(movie_id, share_link)
-        return Result.success()
+        return Result.success('更新成功')
     except Exception as e:
         return Result.fail(e)
