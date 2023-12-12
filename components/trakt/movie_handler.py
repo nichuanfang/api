@@ -5,8 +5,8 @@ from core import cache
 
 # 查询总数
 TOTAL_COUNT = 'SELECT COUNT(*) FROM movie'
-# 分页查询电影列表
-QUERY_MOVIE_BY_PAGED = 'SELECT * FROM movie LIMIT :page_size OFFSET :offset'
+# 分页查询电影列表(按照最后观看时间排序)
+QUERY_MOVIE_BY_PAGED = 'SELECT * FROM movie LIMIT :page_size OFFSET :offset ORDER BY last_watched_at DESC'
 # 更新分享链接
 UPDATE_MOVIE_SHARE_LINK = 'UPDATE movie SET share_link = :share_link WHERE movie_id = :movie_id'
 #  根据类型查询索引表数据
