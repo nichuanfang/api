@@ -5,6 +5,8 @@ from components.trakt import movie_handler, show_handler
 # 创建蓝图
 blueprint = Blueprint('blueprint', __name__, url_prefix='/trakt')
 
+# =========================电影================================
+
 
 @blueprint.route('/movie')
 def movies():
@@ -20,6 +22,44 @@ def movies():
         return Result.success(movie_handler.get_movies(curr_page, page_size))
     except Exception as e:
         return Result.fail(e)
+
+
+@blueprint.route('/movie/<movie_id>')
+def movie(movie_id):
+    """获取电影详情
+
+    Args:
+        movie_id (str): 电影的tmdb_id
+
+    Returns:
+        _type_: 电影详情
+    """
+    try:
+        return Result.success(movie_handler.get_movie(movie_id))
+    except Exception as e:
+        return Result.fail(e)
+
+
+@blueprint.route('/update_movie_share_link', methods=['POST'])
+def update_movie_share_link():
+    """更新电影分享链接
+
+    Returns:
+        _type_: 更新结果
+    """
+    # 获取请求参数tmdb_id和share_link
+    movie_id = request.form.get('movie_id')
+    share_link = request.form.get('share_link')
+    if not movie_id or not share_link:
+        return Result.fail('movie_id和share_link不能为空')
+    try:
+        movie_handler.update_share_link(movie_id, share_link)
+        return Result.success('更新成功')
+    except Exception as e:
+        return Result.fail(e)
+
+
+# ==============================剧集===================================
 
 
 @blueprint.route('/index')
@@ -41,27 +81,9 @@ def refresh_cache():
     """
     try:
         movie_handler.get_movies.cache_clear()
+        movie_handler.get_movie.cache_clear()
         movie_handler.get_index.cache_clear()
         show_handler.get_index.cache_clear()
         return Result.success(msg='刷新缓存成功')
-    except Exception as e:
-        return Result.fail(e)
-
-
-@blueprint.route('/update_movie_share_link', methods=['POST'])
-def update_movie_share_link():
-    """更新电影分享链接
-
-    Returns:
-        _type_: 更新结果
-    """
-    # 获取请求参数tmdb_id和share_link
-    movie_id = request.form.get('movie_id')
-    share_link = request.form.get('share_link')
-    if not movie_id or not share_link:
-        return Result.fail('movie_id和share_link不能为空')
-    try:
-        movie_handler.update_share_link(movie_id, share_link)
-        return Result.success('更新成功')
     except Exception as e:
         return Result.fail(e)

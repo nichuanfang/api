@@ -1,4 +1,5 @@
 import json
+from libsql_client.result import Row
 from typing import Union
 # 统一结果类
 
@@ -42,7 +43,7 @@ class Page:
 class Result:
 
     @staticmethod
-    def success(data: Union[str, dict, list, Page, None] = None, code: int = 200, msg: str = 'success') -> str:
+    def success(data: Union[str, dict, list, Page, Row, None] = None, code: int = 200, msg: str = 'success') -> str:
         """成功响应
 
         Args:
@@ -54,7 +55,12 @@ class Result:
             str: _description_
         """
         res = {}
-        res['data'] = data.__json__() if isinstance(data, Page) else data
+        if isinstance(data, Row):
+            res['data'] = data.asdict()
+        elif isinstance(data, Page):
+            res['data'] = data.__json__()
+        else:
+            res['data'] = data
         res['code'] = code
         res['msg'] = msg
         return json.dumps(res)

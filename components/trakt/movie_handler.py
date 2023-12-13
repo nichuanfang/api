@@ -11,6 +11,8 @@ QUERY_MOVIE_BY_PAGED = 'SELECT * FROM movie  ORDER BY last_watched_at DESC LIMIT
 UPDATE_MOVIE_SHARE_LINK = 'UPDATE movie SET share_link = :share_link WHERE movie_id = :movie_id'
 #  根据类型查询索引表数据
 SELECT_LOCAL_SEARCH_BY_TYPE = "SELECT * FROM local_search WHERE type = ?"
+# 根据movie_id查询电影详情
+SELECT_MOVIE_BY_ID = "SELECT * FROM movie WHERE movie_id = ?"
 
 
 @cache.cache_with_expiry(1)
@@ -49,6 +51,25 @@ def get_movies(curr_page: int = 1, page_size: int = 10):
             page_data.append(data)
         page.data = page_data
         return page
+
+
+@cache.cache_with_expiry(1)
+def get_movie(movie_id: str):
+    """获取电影详情
+
+    Args:
+        movie_id (str): 电影的tmdb_id
+
+    Returns:
+        _type_: 电影详情
+    """
+    with acquire_client_sync() as turso_client:
+        # 查询电影详情
+        rows = turso_client.execute(
+            SELECT_MOVIE_BY_ID, [movie_id]).rows
+        if len(rows) == 0:
+            return None
+        return rows[0]
 
 
 def update_share_link(movie_id: str, share_link: str):
