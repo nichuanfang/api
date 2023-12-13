@@ -42,7 +42,7 @@ def movie(movie_id):
 
 @blueprint.route('/update_movie_share_link', methods=['POST'])
 def update_movie_share_link():
-    """更新电影分享链接
+    """更新电影分享链接 content-type为application/x-www-form-urlencoded
 
     Returns:
         _type_: 更新结果

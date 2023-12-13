@@ -84,6 +84,7 @@ def update_share_link(movie_id: str, share_link: str):
             'movie_id': movie_id, 'share_link': share_link})
         # 清除缓存
         get_movies.cache_clear()
+        get_movie.cache_clear()
 
 
 @cache.cache_with_expiry(1)
