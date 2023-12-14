@@ -3,7 +3,7 @@ from core.result import Result
 from components.trakt import movie_handler, show_handler
 
 # 创建蓝图
-blueprint = Blueprint('blueprint', __name__, url_prefix='/trakt')
+blueprint = Blueprint('trakt', __name__, url_prefix='/trakt')
 
 # =========================电影================================
 
