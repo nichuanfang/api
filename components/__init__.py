@@ -1,8 +1,18 @@
 # 读取components目录下的所有文件，将其注册到组件列表中
 import os
-
+from flask import Blueprint
 
 blueprints = []
+
+common_blueprint = Blueprint('common', __name__, url_prefix='/common')
+
+
+@common_blueprint.route('/init')
+def movies():
+    return ''
+
+
+blueprints.append(common_blueprint)
 
 # 获取 components模块 trakt模块下的 blueprint 并加入到blueprints列表中
 for file in os.listdir(os.path.dirname(__file__)):
