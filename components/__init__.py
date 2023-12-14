@@ -9,7 +9,7 @@ common_blueprint = Blueprint('common', __name__, url_prefix='/common')
 
 @common_blueprint.route('/init')
 def movies():
-    return ''
+    return 'init'
 
 
 blueprints.append(common_blueprint)
