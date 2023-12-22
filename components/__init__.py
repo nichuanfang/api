@@ -8,7 +8,7 @@ blueprints = []
 common_blueprint = Blueprint('common', __name__, url_prefix='/common')
 
 
-@cache.cache_with_expiry(1)
+@cache.cache_with_expiry(8)
 @common_blueprint.route('/init')
 def movies():
     return 'init'
