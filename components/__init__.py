@@ -5,16 +5,15 @@ from core import cache
 
 blueprints = []
 
-common_blueprint = Blueprint('common', __name__, url_prefix='/common')
+# common_blueprint = Blueprint('common', __name__, url_prefix='/common')
 
 
-@cache.cache_with_expiry(8)
-@common_blueprint.route('/init')
-def movies():
-    return 'init'
+# @common_blueprint.route('/init')
+# def movies():
+#     return 'init'
 
 
-blueprints.append(common_blueprint)
+# blueprints.append(common_blueprint)
 
 # 获取 components模块 trakt模块下的 blueprint 并加入到blueprints列表中
 for file in os.listdir(os.path.dirname(__file__)):

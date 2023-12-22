@@ -15,7 +15,7 @@ SELECT_LOCAL_SEARCH_BY_TYPE = "SELECT * FROM local_search WHERE type = ?"
 SELECT_MOVIE_BY_ID = "SELECT * FROM movie WHERE movie_id = ?"
 
 
-@cache.cache_with_expiry(8)
+@cache.cache_with_expiry(876000)
 def get_movies(curr_page: int = 1, page_size: int = 10):
     """分页查询电影列表
 
@@ -53,7 +53,7 @@ def get_movies(curr_page: int = 1, page_size: int = 10):
         return page
 
 
-@cache.cache_with_expiry(8)
+@cache.cache_with_expiry(876000)
 def get_movie(movie_id: str):
     """获取电影详情
 
@@ -87,7 +87,7 @@ def update_share_link(movie_id: str, share_link: str):
         get_movie.cache_clear()
 
 
-@cache.cache_with_expiry(8)
+@cache.cache_with_expiry(876000)
 def get_index():
     """获取电影索引
 

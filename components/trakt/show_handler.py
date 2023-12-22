@@ -2,6 +2,6 @@
 from core import cache
 
 
-@cache.cache_with_expiry(8)
+@cache.cache_with_expiry(876000)
 def get_index():
     return ''
