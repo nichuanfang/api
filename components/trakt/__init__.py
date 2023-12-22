@@ -75,15 +75,25 @@ def index():
         return Result.fail(e)
 
 
-@blueprint.route('/refresh_cache')
-def refresh_cache():
-    """刷新缓存
+@blueprint.route('/refresh_movie_cache')
+def refresh_movie_cache():
+    """刷新电影缓存
     """
     try:
         movie_handler.get_movies.cache_clear()
         movie_handler.get_movie.cache_clear()
         movie_handler.get_index.cache_clear()
+        return Result.success(msg='刷新movie缓存成功')
+    except Exception as e:
+        return Result.fail(e)
+
+
+@blueprint.route('/refresh_show_cache')
+def refresh_show_cache():
+    """刷新剧集缓存
+    """
+    try:
         show_handler.get_index.cache_clear()
-        return Result.success(msg='刷新缓存成功')
+        return Result.success(msg='刷新show缓存成功')
     except Exception as e:
         return Result.fail(e)
