@@ -148,6 +148,8 @@ def refresh_show_cache():
 	"""刷新剧集缓存
 	"""
 	try:
+		show_handler.get_shows.cache_clear()
+		show_handler.get_show.cache_clear()
 		show_handler.get_index.cache_clear()
 		return Result.success(msg='刷新show缓存成功')
 	except Exception as e:
